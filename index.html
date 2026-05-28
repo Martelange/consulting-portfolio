@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Consulting — Transformez vos process, gagnez en vélocité</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0e0c;
+    --ink-soft: #5c5b57;
+    --ink-ghost: #a8a6a0;
+    --paper: #f5f3ee;
+    --paper-warm: #ede9e1;
+    --accent: #c8440a;
+    --accent-light: #f5e8e0;
+    --border: rgba(15,14,12,0.12);
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(245,243,238,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--ink-soft);
+    font-size: 0.875rem; font-weight: 400;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--ink) !important;
+    color: var(--paper) !important;
+    padding: 0.5rem 1.25rem !important;
+    border-radius: 100px !important;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: #2a2926 !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 3rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(200,68,10,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .hero-label::before {
+    content: '';
+    display: block; width: 2rem; height: 0.5px;
+    background: var(--accent);
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 14ch;
+    margin-bottom: 2rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    max-width: 48ch;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--ink); color: var(--paper);
+    padding: 0.875rem 2rem;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 500; font-size: 0.925rem;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary:hover { background: #2a2926; transform: translateY(-1px); }
+  .btn-secondary {
+    color: var(--ink); text-decoration: none;
+    font-size: 0.925rem; font-weight: 400;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    border-bottom: 0.5px solid var(--border);
+    padding-bottom: 1px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--ink); }
+  .hero-scroll {
+    position: absolute; right: 3rem; bottom: 3rem;
+    writing-mode: vertical-rl;
+    font-size: 0.75rem; letter-spacing: 0.1em;
+    color: var(--ink-ghost); text-transform: uppercase;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-scroll::after {
+    content: '';
+    width: 0.5px; height: 3rem;
+    background: var(--ink-ghost);
+  }
+
+  /* ── STRIP ── */
+  .strip {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1.25rem 3rem;
+    display: flex; gap: 4rem; align-items: center;
+    overflow-x: auto;
+    font-size: 0.8rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: rgba(245,243,238,0.45);
+    white-space: nowrap;
+  }
+  .strip-item { flex-shrink: 0; }
+
+  /* ── SECTIONS COMMUNES ── */
+  section { padding: 6rem 3rem; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .section-label::before {
+    content: ''; display: block;
+    width: 1.5rem; height: 0.5px; background: var(--accent);
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 20ch;
+    margin-bottom: 1.5rem;
+  }
+  .section-sub {
+    max-width: 52ch;
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 3.5rem;
+  }
+
+  /* ── SERVICES ── */
+  #services { background: var(--paper-warm); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: var(--border);
+  }
+  .service-card {
+    background: var(--paper-warm);
+    padding: 2.5rem 2rem;
+    transition: background 0.25s;
+  }
+  .service-card:hover { background: var(--paper); }
+  .service-num {
+    font-family: var(--serif);
+    font-size: 3.5rem; line-height: 1;
+    color: var(--border);
+    margin-bottom: 1.5rem;
+  }
+  .service-icon {
+    width: 2.5rem; height: 2.5rem;
+    background: var(--accent-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .service-icon svg { width: 1.1rem; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+  .service-name {
+    font-family: var(--serif);
+    font-size: 1.4rem; margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+  .service-desc {
+    color: var(--ink-soft);
+    font-size: 0.9rem; line-height: 1.75;
+  }
+
+  /* ── PROCESS ── */
+  #process { }
+  .process-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .process-steps { display: flex; flex-direction: column; gap: 0; }
+  .process-step {
+    display: flex; gap: 1.5rem;
+    padding: 1.75rem 0;
+    border-bottom: 0.5px solid var(--border);
+    cursor: default;
+    transition: padding-left 0.25s;
+  }
+  .process-step:last-child { border-bottom: none; }
+  .process-step:hover { padding-left: 0.75rem; }
+  .step-num {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    color: var(--accent);
+    min-width: 2rem;
+    padding-top: 0.1rem;
+  }
+  .step-content h3 {
+    font-size: 1rem; font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+  .step-content p {
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+  .process-aside {
+    position: sticky; top: 8rem;
+    background: var(--ink);
+    border-radius: 1.5rem;
+    padding: 3rem;
+    color: var(--paper);
+  }
+  .aside-quote {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    line-height: 1.35;
+    margin-bottom: 2rem;
+    color: rgba(245,243,238,0.9);
+  }
+  .aside-quote em { color: var(--accent); font-style: italic; }
+  .aside-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid rgba(245,243,238,0.12);
+  }
+  .stat-val {
+    font-family: var(--serif);
+    font-size: 2.25rem; line-height: 1;
+    margin-bottom: 0.35rem;
+    color: var(--paper);
+  }
+  .stat-lab {
+    font-size: 0.78rem;
+    color: rgba(245,243,238,0.45);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── PROJETS ── */
+  #projets { background: var(--paper-warm); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--paper);
+    border: 0.5px solid var(--border);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(15,14,12,0.08);
+  }
+  .project-thumb {
+    aspect-ratio: 16/9;
+    background: var(--paper-warm);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .project-thumb-demo {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .project-thumb-1 { background: linear-gradient(135deg, #f0ebe3 0%, #e8e0d4 100%); }
+  .project-thumb-2 { background: linear-gradient(135deg, #e8f0f5 0%, #ddeaf5 100%); }
+  .project-thumb-3 { background: linear-gradient(135deg, #f0ede8 0%, #e8e3da 100%); }
+  .project-thumb svg { width: 4rem; opacity: 0.25; }
+  .project-tag {
+    position: absolute; top: 1rem; right: 1rem;
+    background: rgba(245,243,238,0.92);
+    backdrop-filter: blur(6px);
+    font-size: 0.7rem; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+    color: var(--ink-soft);
+    border: 0.5px solid var(--border);
+  }
+  .project-body { padding: 1.5rem; }
+  .project-title {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.25;
+  }
+  .project-desc {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+  .project-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 0.8rem; color: var(--ink-ghost);
+  }
+  .project-link {
+    color: var(--accent); font-weight: 500;
+    display: flex; align-items: center; gap: 0.3rem;
+  }
+  .project-empty {
+    border-style: dashed !important;
+    opacity: 0.5;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 260px;
+    text-align: center;
+    font-size: 0.9rem; color: var(--ink-ghost);
+    gap: 0.75rem;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .about-visual {
+    aspect-ratio: 4/5;
+    background: var(--paper-warm);
+    border-radius: 1.5rem;
+    border: 0.5px solid var(--border);
+    display: flex; align-items: flex-end;
+    overflow: hidden;
+    position: relative;
+  }
+  .about-visual-inner {
+    width: 100%; padding: 2rem;
+    background: linear-gradient(to top, rgba(15,14,12,0.7) 0%, transparent 100%);
+    color: var(--paper);
+  }
+  .about-visual-label {
+    font-size: 0.75rem; letter-spacing: 0.12em;
+    text-transform: uppercase; opacity: 0.5;
+    margin-bottom: 0.5rem;
+  }
+  .about-visual-name {
+    font-family: var(--serif); font-size: 1.5rem;
+  }
+  .about-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(15,14,12,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15,14,12,0.04) 1px, transparent 1px);
+    background-size: 2rem 2rem;
+  }
+  .about-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -60%);
+    width: 6rem; height: 6rem;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: var(--accent);
+  }
+  .about-text h2 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+  .about-text p {
+    color: var(--ink-soft);
+    margin-bottom: 1.25rem;
+    font-size: 0.975rem;
+    line-height: 1.8;
+  }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
+  .tag {
+    background: var(--paper-warm);
+    border: 0.5px solid var(--border);
+    padding: 0.35rem 0.9rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+  }
+  #contact .section-label { justify-content: center; color: rgba(200,68,10,0.9); }
+  #contact .section-label::before { background: rgba(200,68,10,0.9); }
+  #contact .section-title { color: var(--paper); margin: 0 auto 1.5rem; }
+  #contact .section-sub { color: rgba(245,243,238,0.5); margin: 0 auto 2.5rem; }
+  .contact-email {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    color: var(--paper);
+    text-decoration: none;
+    border-bottom: 0.5px solid rgba(245,243,238,0.2);
+    padding-bottom: 0.25rem;
+    transition: border-color 0.2s;
+    display: inline-block;
+    margin-bottom: 3rem;
+  }
+  .contact-email:hover { border-color: rgba(245,243,238,0.6); }
+  .contact-links { display: flex; gap: 1.5rem; justify-content: center; }
+  .contact-link {
+    color: rgba(245,243,238,0.4);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .contact-link:hover { color: rgba(245,243,238,0.8); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 2rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 0.5px solid rgba(245,243,238,0.08);
+  }
+  .footer-copy {
+    font-size: 0.78rem;
+    color: rgba(245,243,238,0.25);
+  }
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: rgba(245,243,238,0.4);
+  }
+  .footer-logo span { color: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.5rem 4rem; }
+    section { padding: 4rem 1.5rem; }
+    .process-layout, #about { grid-template-columns: 1fr; gap: 2.5rem; }
+    .process-aside { position: relative; top: 0; }
+    .strip { padding: 1rem 1.5rem; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
+    .hero-scroll { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AI<span>.</span>Consult</div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#process">Méthode</a>
+    <a href="#projets">Projets</a>
+    <a href="#about">À propos</a>
+    <a href="#contact" class="nav-cta">Parler de votre projet</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-label">Consultant en transformation IA</div>
+  <h1 class="hero-title">Vos process <em>réinventés</em> par l'intelligence artificielle</h1>
+  <p class="hero-sub">
+    J'identifie où votre équipe perd du temps, puis je construis les outils IA qui le récupèrent — des solutions concrètes, mesurables, taillées pour vos vrais problèmes.
+  </p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">
+      Démarrer un assessment
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+    </a>
+    <a href="#projets" class="btn-secondary">
+      Voir les projets
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8M6 2l4 4-4 4"/></svg>
+    </a>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <span class="strip-item">Automatisation de workflows</span>
+  <span class="strip-item">·</span>
+  <span class="strip-item">Intégration d'agents IA</span>
+  <span class="strip-item">·</span>
+  <span class="strip-item">Assessment opérationnel</span>
+  <span class="strip-item">·</span>
+  <span class="strip-item">Outils sur-mesure</span>
+  <span class="strip-item">·</span>
+  <span class="strip-item">Formation des équipes</span>
+  <span class="strip-item">·</span>
+  <span class="strip-item">RAG & bases de connaissance</span>
+  <span class="strip-item">·</span>
+  <span class="strip-item">Automatisation de workflows</span>
+  <span class="strip-item">·</span>
+  <span class="strip-item">Intégration d'agents IA</span>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">Ce que je fais</div>
+  <h2 class="section-title">Trois façons de transformer votre organisation</h2>
+  <p class="section-sub">
+    Chaque mission commence par comprendre votre réalité opérationnelle — pas par vendre une solution générique.
+  </p>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg>
+      </div>
+      <div class="service-name">Assessment opérationnel</div>
+      <p class="service-desc">
+        Audit de vos process pour cartographier les frictions, les tâches répétitives et les goulots d'étranglement. Livrable : une roadmap IA priorisée avec ROI estimé.
+      </p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 20 20"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="11" y="3" width="6" height="6" rx="1"/><rect x="3" y="11" width="6" height="6" rx="1"/><path d="M11 14h6M14 11v6"/></svg>
+      </div>
+      <div class="service-name">Outils IA sur-mesure</div>
+      <p class="service-desc">
+        Conception et développement d'outils adaptés à vos workflows réels — assistants intelligents, automatisations, dashboards et agents autonomes.
+      </p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 20 20"><path d="M4 17V8l6-5 6 5v9M8 17v-6h4v6"/></svg>
+      </div>
+      <div class="service-name">Intégration & formation</div>
+      <p class="service-desc">
+        Implémentation dans vos systèmes existants et montée en compétences de vos équipes pour qu'elles deviennent autonomes avec les nouveaux outils.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-layout">
+    <div>
+      <div class="section-label">La méthode</div>
+      <h2 class="section-title">Simple, rapide, ancré dans votre réalité</h2>
+      <p class="section-sub">
+        Une approche itérative qui livre de la valeur à chaque étape, sans attendre six mois pour voir un résultat.
+      </p>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Diagnostic terrain</h3>
+            <p>Interviews avec vos équipes, observation des workflows, identification des points de friction. 1 à 2 jours.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Cartographie & priorisation</h3>
+            <p>Mapping des opportunités IA avec impact estimé et complexité de mise en œuvre. Vous choisissez par où commencer.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Prototype en 2 semaines</h3>
+            <p>Un premier outil fonctionnel testable par vos équipes. On itère vite sur la base de retours réels.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>Déploiement & transfert</h3>
+            <p>Mise en production, documentation et formation pour que l'outil vive dans votre organisation sans moi.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="process-aside">
+      <p class="aside-quote">
+        "La plupart des entreprises n'ont pas besoin de plus d'IA — elles ont besoin de <em>mieux utiliser</em> celle qui existe déjà."
+      </p>
+      <div class="aside-stats">
+        <div>
+          <div class="stat-val">2–4h</div>
+          <div class="stat-lab">Économisées / semaine / personne en moyenne</div>
+        </div>
+        <div>
+          <div class="stat-val">2 sem.</div>
+          <div class="stat-lab">Pour un premier prototype fonctionnel</div>
+        </div>
+        <div>
+          <div class="stat-val">100%</div>
+          <div class="stat-lab">Des outils livrés avec documentation</div>
+        </div>
+        <div>
+          <div class="stat-val">0</div>
+          <div class="stat-lab">Boîte noire — tout s'explique</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section id="projets">
+  <div class="section-label">Réalisations</div>
+  <h2 class="section-title">Projets & démonstrations</h2>
+  <p class="section-sub">
+    Des outils réels construits pour des vrais problèmes. Cliquez pour voir les démos.
+  </p>
+  <div class="projects-grid">
+
+    <!-- Projet exemple 1 -->
+    <a href="#" class="project-card">
+      <div class="project-thumb project-thumb-1">
+        <div class="project-thumb-demo">
+          <svg viewBox="0 0 80 80" fill="none" stroke="#c8440a" stroke-width="1.5" opacity="0.4">
+            <rect x="10" y="20" width="60" height="40" rx="4"/>
+            <path d="M10 30h60M25 20v40M55 20v40"/>
+          </svg>
+        </div>
+        <span class="project-tag">Automatisation</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Assistant de reporting automatisé</div>
+        <p class="project-desc">Génération hebdomadaire de rapports à partir de données brutes. Zéro intervention manuelle.</p>
+        <div class="project-footer">
+          <span>Secteur : Finance</span>
+          <span class="project-link">Démo →</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Projet exemple 2 -->
+    <a href="#" class="project-card">
+      <div class="project-thumb project-thumb-2">
+        <div class="project-thumb-demo">
+          <svg viewBox="0 0 80 80" fill="none" stroke="#185fa5" stroke-width="1.5" opacity="0.4">
+            <circle cx="40" cy="40" r="20"/>
+            <path d="M40 20v40M20 40h40"/>
+            <circle cx="40" cy="40" r="8"/>
+          </svg>
+        </div>
+        <span class="project-tag">Agent IA</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Base de connaissances intelligente</div>
+        <p class="project-desc">RAG sur la documentation interne — les équipes trouvent l'info en secondes au lieu de chercher pendant des heures.</p>
+        <div class="project-footer">
+          <span>Secteur : RH / Ops</span>
+          <span class="project-link">Démo →</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Projet exemple 3 -->
+    <a href="#" class="project-card">
+      <div class="project-thumb project-thumb-3">
+        <div class="project-thumb-demo">
+          <svg viewBox="0 0 80 80" fill="none" stroke="#3b6d11" stroke-width="1.5" opacity="0.4">
+            <path d="M15 55 L30 35 L45 45 L60 25"/>
+            <circle cx="30" cy="35" r="3" fill="#3b6d11"/>
+            <circle cx="45" cy="45" r="3" fill="#3b6d11"/>
+            <circle cx="60" cy="25" r="3" fill="#3b6d11"/>
+          </svg>
+        </div>
+        <span class="project-tag">Dashboard</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Trieur intelligent d'e-mails clients</div>
+        <p class="project-desc">Classification automatique et suggestion de réponses. Le support répond 3× plus vite.</p>
+        <div class="project-footer">
+          <span>Secteur : SaaS</span>
+          <span class="project-link">Démo →</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Carte "à venir" -->
+    <div class="project-card project-empty">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1">
+        <circle cx="20" cy="20" r="16"/>
+        <path d="M20 12v8l5 5"/>
+      </svg>
+      <span>Votre projet ici</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual">
+    <div class="about-grid-bg"></div>
+    <div class="about-center">AI</div>
+    <div class="about-visual-inner">
+      <div class="about-visual-label">Consultant & Builder</div>
+      <div class="about-visual-name">Votre nom ici</div>
+    </div>
+  </div>
+  <div class="about-text">
+    <div class="section-label">À propos</div>
+    <h2>Je construis des ponts entre la stratégie et les outils concrets</h2>
+    <p>
+      Après des années à observer des équipes perdre du temps sur des tâches que l'IA peut gérer, j'ai décidé d'en faire ma mission : apporter des solutions qui fonctionnent vraiment, pas des PowerPoint.
+    </p>
+    <p>
+      Mon approche est hybride : une sensibilité business pour comprendre vos enjeux réels, et des compétences techniques pour livrer des outils qui tournent en production.
+    </p>
+    <p>
+      Chaque engagement est limité en scope pour garantir la qualité — je préfère faire peu de missions, mais les faire bien.
+    </p>
+    <div class="about-tags">
+      <span class="tag">LLMs & agents</span>
+      <span class="tag">Process design</span>
+      <span class="tag">Python & APIs</span>
+      <span class="tag">Change management</span>
+      <span class="tag">RAG / Embeddings</span>
+      <span class="tag">No-code / Make</span>
+      <span class="tag">Prompt engineering</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <h2 class="section-title">Parlons de votre projet</h2>
+  <p class="section-sub">
+    Un email suffit pour démarrer. Je réponds sous 24h et on peut faire un premier appel de 30 min sans engagement pour voir si on est alignés.
+  </p>
+  <a href="mailto:votre@email.com" class="contact-email">votre@email.com</a>
+  <div class="contact-links">
+    <a href="#" class="contact-link">LinkedIn</a>
+    <a href="#" class="contact-link">GitHub</a>
+    <a href="#" class="contact-link">Calendly</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">AI<span>.</span>Consult</div>
+  <div class="footer-copy">© 2025 — Bruxelles, Belgique</div>
+</footer>
+
+</body>
+</html>
